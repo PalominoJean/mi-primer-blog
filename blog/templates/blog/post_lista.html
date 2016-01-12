@@ -1,19 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>lista de posts</title>
-</head>
-<body>
-	<div>
-		<h1><a href="/">Mi Blog :D</a></h1>
-	</div>
+{% extends 'blog/base.html' %}
+{% block content %}
 	{% for post in posts %}
-		<div>
-			<br/>
-			<p>publicado: {{post.publicacion_fecha}}</p>
-			<h2><a href="/">{{post.titulo}}</a></h2>
-			<p>{{post.texto|linebreaks}}</p>
-		</div>
-	{% endfor %}
-</body>
-</html>
+        <div class="post">
+            <div class="date">
+                {{ post.publicacion_fecha }}
+            </div>
+            <h1><a href="{% url 'blog.views.post_detalle' post_pk=post.pk %}">{{ post.titulo }}</a></h1>
+            <p>{{ post.texto|linebreaks }}</p>
+        </div>
+    {% endfor %}
+{% endblock content %}
