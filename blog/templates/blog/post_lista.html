@@ -5,17 +5,15 @@
 </head>
 <body>
 	<div>
-		<h1>
-			<a href="/">Mi Blog :D</a>
-		</h1>
+		<h1><a href="/">Mi Blog :D</a></h1>
 	</div>
-	{%for post in posts%}
+	{% for post in posts %}
 		<div>
 			<br/>
-			<p>publicado el {{post.publicacion_fecha}}</p>
+			<p>publicado: {{post.publicacion_fecha}}</p>
 			<h2><a href="/">{{post.titulo}}</a></h2>
 			<p>{{post.texto|linebreaks}}</p>
 		</div>
-	{%endfor%}
+	{% endfor %}
 </body>
 </html>
