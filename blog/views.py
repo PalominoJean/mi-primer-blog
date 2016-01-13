@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404, redirect
 from django.utils import timezone
 from blog.models import Post
 from blog.forms import PostForm
-
+from django.contrib.auth.models import User
 
 # Create your views here.
 def post_lista(request):
@@ -18,7 +18,8 @@ def post_nuevo(request):
 		form = PostForm(request.POST)
 		if form.is_valid():
 			post = form.save(commit=False)
-			post.autor = request.user
+			me=User.objects.get(username='jean')
+			post.autor = me
 			post.publicacion_fecha = timezone.now()
 			post.save()
 			return redirect('blog.views.post_detalle', post_pk=post.pk)
@@ -32,7 +33,8 @@ def post_editar(request,post_pk):
 		form=PostForm(request.POST, instance=post)
 		if form.is_valid():
 			post=form.save(commit=False)
-			post.autor=request.user
+			me=User.objects.get(username='jean')
+			post.autor = me
 			post.save()
 			return redirect('blog.views.post_detalle',post_pk=post.pk)
 	else:
