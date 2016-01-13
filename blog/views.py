@@ -40,3 +40,8 @@ def post_editar(request,post_pk):
 	else:
 		form=PostForm(instance=post)
 	return render(request,'blog/post_nuevo.html',{'form':form})
+
+def post_eliminar(request,post_pk):
+	post=get_object_or_404(Post,pk=post_pk)
+	post.delete()
+	return redirect('blog.views.post_lista')
