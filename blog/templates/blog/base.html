@@ -13,7 +13,8 @@
         {% if user.is_authenticated %}
             <a href="{% url 'blog.views.post_nuevo' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
             <a href="{% url 'blog.views.post_seleccionar_lista' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
-            <p class="top-menu">Hola {{user.username}} 
+            <p class="top-menu">
+                Hola {{user.username}} 
                 <a href="{% url "django.contrib.auth.views.logout" %}"><span class="glyphicon glyphicon-log-in"></span>
             </p>
         {% else %}
