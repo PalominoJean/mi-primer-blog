@@ -5,8 +5,9 @@
             <div class="date">
                 {{ post.publicacion_fecha }}
             </div>
-            <h1><a href="{% url 'blog.views.post_detalle' post_pk=post.pk %}">{{ post.titulo }}</a></h1>
+            <h1><a href="{% url 'post_detalle' post_pk=post.pk %}">{{ post.titulo }}</a></h1>
             <p>{{ post.texto|linebreaks }}</p>
+            <a href="{% url 'post_detalle' post_pk=post.pk %}">Comentarios: {{post.comentarios_aprobados.count}}</a>
         </div>
     {% endfor %}
 {% endblock content %}

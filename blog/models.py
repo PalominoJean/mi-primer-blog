@@ -13,3 +13,17 @@ class Post(models.Model):
 		self.save()
 	def __str__(self):
 		return self.titulo
+	def comentarios_aprobados(self):
+		return self.comentarios.filter(aprobado=True)
+
+class Comentario(models.Model):
+	post=models.ForeignKey('Post',related_name="comentarios")
+	autor=models.CharField(max_length=30)
+	texto=models.TextField()
+	creacion_fecha=models.DateTimeField(default=timezone.now)
+	aprobado=models.BooleanField(default=False)
+	def aprobar(self):
+		self.aprobado=True
+		self.save()
+	def __str__(self):
+		return self.texto

@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404, redirect
 from django.utils import timezone
-from blog.models import Post
-from blog.forms import PostForm
+from blog.models import Post, Comentario
+from blog.forms import PostForm, ComentarioForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -57,3 +57,38 @@ def post_publicar(request,post_pk):
 	post=get_object_or_404(Post,pk=post_pk)
 	post.publicar()
 	return redirect('blog.views.post_detalle',post_pk=post.pk)
+
+def comentario_nuevo(request,post_pk):
+	post=get_object_or_404(Post,pk=post_pk)
+	if request.method=='POST':
+		form=ComentarioForm(request.POST)
+		if form.is_valid():
+			comentario=form.save(commit=False)
+			comentario.post=post
+			comentario.save()	
+			return redirect('post_detalle',post_pk=post.pk)
+	else:
+		form=ComentarioForm()
+	return render(request,'blog/comentario_nuevo.html',{'form':form,'post':post})
+
+@login_required
+def comentario_aprobar(request,comentario_pk):
+	comentario=get_object_or_404(Comentario,pk=comentario_pk)
+	comentario.aprobar()
+	comentario.save()
+	return redirect('post_detalle',post_pk=comentario.post.pk)
+	
+@login_required
+def comentario_eliminar(request,comentario_pk):
+	comentario=get_object_or_404(Comentario,pk=comentario_pk)
+	post_pk=comentario.post.pk
+	comentario.delete()
+	return redirect('post_detalle', post_pk)
+
+
+
+
+
+
+
+
